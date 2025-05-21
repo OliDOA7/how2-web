@@ -1,0 +1,472 @@
+/* --- Global Resets & Variables --- */
+:root {
+    --brand-primary: #5e17eb;    /* Purple */
+    --brand-primary-darker: #4a13b3;
+    --brand-secondary: #f35a2b;   /* Orange */
+    --brand-secondary-darker: #d0451c;
+    --brand-accent: #5cbbff;      /* Light Blue */
+    --brand-dark: #080b10;
+
+    --text-light: #f8f9fa;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --text-headings: var(--brand-primary);
+
+    --bg-light: #f8f9fa; /* Light grey for alternating sections */
+    --bg-white: #ffffff;
+    --bg-dark: var(--brand-dark);
+
+    --border-light: #dee2e6;
+    --border-dark: #343a40;
+
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Roboto', sans-serif;
+
+    --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
+    --shadow-md: 0 .5rem 1rem rgba(0,0,0,.15);
+
+    /* UPDATED HEADER HEIGHT */
+    --header-height: 180px; /* Accommodate 140px logo + 20px top/bottom padding */
+    --border-radius: 6px;
+}
+
+/* ... (rest of :root and other styles remain the same unless specified below) ... */
+
+/* --- Header --- */
+#main-header {
+    background-color: var(--bg-white);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: var(--header-height); /* Uses the updated --header-height */
+    display: flex; /* Ensures direct children (like .container) can be centered if needed */
+    /* align-items: center; /* This centers the .container itself if header is taller than .container */
+}
+#main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* This will vertically center items within the container */
+    height: 100%; /* Make container take full new header height */
+}
+#company-logo {
+    /* max-height: calc(var(--header-height) - 30px); OLD */
+    max-height: 140px; /* NEW: 3.5x of roughly 40px */
+    width: auto;
+    display: block; /* Helps with some layout edge cases */
+}
+
+/* ... (rest of #main-nav, #mobile-menu-toggle, .header-cta styles should largely adapt due to flexbox alignment in .container.
+    However, you might want to adjust their font sizes or padding if they look too small in the very tall header) ... */
+
+/* --- Hero Section --- */
+#hero {
+    background-color: var(--brand-primary);
+    color: var(--text-light);
+    padding: 6em 0; /* This padding might need adjustment if the header is very tall */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    /* min-height: 70vh; You might want to adjust this if the header takes up too much space */
+    /* Consider min-height: calc(70vh - var(--header-height)); IF header is not sticky/fixed */
+    /* If header is sticky, the hero effectively starts below it, so 70vh might be fine but appear smaller. */
+}
+
+/* ... (Other styles remain the same) ... */
+
+/* --- Responsive --- */
+/* ... (Keep existing media queries) ... */
+
+@media (max-width: 768px) {
+    html { font-size: 15px; }
+    /* Consider adjusting header height for mobile if 180px is too much */
+    /* For example:
+    :root {
+        --header-height-mobile: 100px; // Or something more suitable
+    }
+    #main-header {
+        height: var(--header-height-mobile);
+    }
+    #company-logo {
+        max-height: calc(var(--header-height-mobile) - 20px);
+    }
+    #main-nav {
+        top: var(--header-height-mobile);
+    }
+    */
+    /* For now, leaving the header height to be globally 180px as per request */
+    /* The mobile menu positioning might need adjustment if header height changes drastically */
+    #main-nav {
+        top: var(--header-height); /* Ensure mobile menu appears below the new taller header */
+    }
+    /* ... (rest of 768px styles) ... */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-secondary);
+    line-height: 1.7;
+    color: var(--text-dark);
+    background-color: var(--bg-white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    color: var(--text-headings);
+    line-height: 1.3;
+    margin-bottom: 0.75em;
+    font-weight: 600;
+}
+h1 { font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 700; }
+h2.section-title {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    text-align: center;
+    margin-bottom: 1.2em;
+    position: relative;
+    padding-bottom: 0.5em;
+}
+h2.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--brand-secondary); /* Orange underline */
+    margin: 0.3em auto 0;
+    border-radius: 2px;
+}
+h3 { font-size: clamp(1.3rem, 3vw, 1.7rem); }
+p { margin-bottom: 1.25em; color: var(--text-muted); }
+.section-intro {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto 2.5em auto;
+}
+a { color: var(--brand-primary); text-decoration: none; transition: color 0.2s ease; }
+a:hover { color: var(--brand-primary-darker); }
+ul { list-style-position: inside; padding-left: 0; } /* For SaaS card lists */
+ul li { margin-bottom: 0.5em; }
+
+/* --- Buttons --- */
+.cta-button {
+    display: inline-block;
+    padding: 0.75em 1.75em;
+    border-radius: var(--border-radius);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+.header-cta {
+    background-color: var(--brand-primary);
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+.header-cta:hover {
+    background-color: var(--brand-primary-darker);
+    transform: translateY(-1px);
+}
+.hero-main-cta {
+    background-color: var(--brand-secondary);
+    color: var(--text-light);
+    font-size: 1.1rem;
+    padding: 0.9em 2.2em;
+}
+.hero-main-cta:hover {
+    background-color: var(--brand-secondary-darker);
+    transform: translateY(-2px);
+}
+
+/* --- Header --- */
+#main-header {
+    background-color: var(--bg-white);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+}
+#main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#company-logo {
+    max-height: calc(var(--header-height) - 30px); /* Adjust padding */
+    width: auto;
+}
+#main-nav ul {
+    list-style: none;
+    display: flex;
+}
+#main-nav li {
+    margin-left: 1.8em;
+}
+#main-nav a {
+    font-family: var(--font-secondary);
+    font-weight: 500;
+    color: var(--text-dark);
+    padding: 0.5em 0;
+    font-size: 0.95rem;
+    position: relative;
+}
+#main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--brand-primary);
+    transition: width 0.3s ease;
+}
+#main-nav a:hover::after { width: 100%; }
+#mobile-menu-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--brand-primary); }
+
+/* --- Hero Section --- */
+#hero {
+    background-color: var(--brand-primary); /* Primary color background */
+    /* Optional: Add a subtle pattern or gradient if desired */
+    /* background-image: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-darker) 100%); */
+    color: var(--text-light);
+    padding: 6em 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    min-height: 70vh;
+}
+#hero .hero-content { max-width: 800px; margin: 0 auto; }
+#hero h1 { color: var(--text-light); margin-bottom: 0.5em; }
+#hero .subtitle {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 1.5em;
+    font-weight: 300;
+}
+
+/* --- General Section Styling --- */
+.content-section { padding: 4.5em 0; }
+.content-section.bg-light { background-color: var(--bg-light); }
+.content-section.bg-dark { background-color: var(--bg-dark); color: var(--text-light); }
+.content-section.bg-dark h2.section-title { color: var(--text-light); }
+.content-section.bg-dark h2.section-title::after { background-color: var(--brand-accent); }
+.content-section.bg-dark p { color: rgba(255,255,255,0.8); }
+.content-section.bg-dark .section-intro { color: var(--text-light); }
+
+
+/* Solutions Grid (Learning & Digital) */
+.solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5em;
+    margin-top: 2em;
+}
+.solution-item {
+    text-align: center;
+    padding: 1.5em;
+    /* background-color: var(--bg-white); Optional: if section has colored bg */
+    /* border: 1px solid var(--border-light); Optional */
+    /* border-radius: var(--border-radius); */
+    /* box-shadow: var(--shadow-sm); Optional */
+}
+.solution-icon {
+    font-size: 2.5rem;
+    color: var(--brand-secondary); /* Orange icons */
+    margin-bottom: 0.5em;
+    display: block;
+}
+.solution-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.3em;
+    color: var(--text-headings);
+}
+.solution-item p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+.division-tagline {
+    text-align: center;
+    font-style: italic;
+    color: var(--brand-primary);
+    font-size: 1.1rem;
+    margin-top: 2.5em;
+    font-weight: 500;
+}
+
+/* SaaS Products Section */
+.saas-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2em;
+}
+.saas-card {
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius);
+    padding: 2em;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+}
+.saas-logo {
+    max-height: 45px;
+    width: auto;
+    max-width: 200px;
+    margin-bottom: 1em;
+    object-fit: contain;
+    align-self: flex-start;
+}
+.saas-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.25em;
+}
+.saas-tagline {
+    font-size: 0.9rem;
+    color: var(--brand-primary);
+    font-weight: 600;
+    margin-bottom: 0.8em;
+}
+.saas-card p {
+    font-size: 0.95rem;
+    margin-bottom: 1em;
+    flex-grow: 1; /* Make description take space */
+}
+.saas-card ul { margin-bottom: 1.5em; font-size: 0.9rem; padding-left: 1.2em; }
+.saas-card ul li { color: var(--text-muted); }
+.saas-link.cta-button {
+    background-color: var(--brand-primary);
+    color: var(--text-light);
+    align-self: flex-start;
+    margin-top: auto; /* Push to bottom */
+}
+.saas-link.cta-button:hover { background-color: var(--brand-primary-darker); }
+
+
+/* Why Us Section */
+.why-us-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2em;
+    text-align: center;
+}
+.why-us-item { padding: 1em; }
+.why-us-icon {
+    font-size: 2.2rem;
+    color: var(--brand-secondary); /* Orange */
+    margin-bottom: 0.5em;
+}
+.why-us-item h4 {
+    font-size: 1.15rem;
+    margin-bottom: 0.3em;
+    color: var(--text-headings);
+}
+.why-us-item p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0; }
+
+/* Contact Section */
+#contact .section-title { color: var(--text-light); }
+#contact .section-title::after { background-color: var(--brand-accent); }
+#contact .section-intro { color: rgba(255,255,255,0.85); }
+.contact-main-cta {
+    background-color: var(--brand-secondary);
+    color: var(--text-light);
+    font-size: 1.1rem;
+    display: block;
+    max-width: 350px;
+    margin: 2em auto 0;
+}
+.contact-main-cta:hover { background-color: var(--brand-secondary-darker); }
+
+/* --- Footer --- */
+#main-footer {
+    background-color: var(--brand-dark);
+    color: var(--text-light);
+    padding: 3em 0;
+    text-align: center;
+}
+#footer-logo {
+    max-height: 40px;
+    margin-bottom: 1em;
+    opacity: 0.8;
+}
+.footer-content { display: flex; flex-direction: column; align-items: center; }
+.footer-links a {
+    color: var(--brand-accent);
+    margin: 0 0.5em;
+    text-decoration: none;
+}
+.footer-links a:hover { text-decoration: underline; }
+.copyright {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 1em;
+}
+
+/* --- Responsive --- */
+@media (max-width: 992px) {
+    .solutions-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+}
+
+@media (max-width: 768px) {
+    html { font-size: 15px; }
+    #main-header .container { position: relative; }
+    #main-nav {
+        display: none;
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-white);
+        box-shadow: var(--shadow-md);
+        padding: 1em 0;
+    }
+    #main-nav.active { display: block; }
+    #main-nav ul { flex-direction: column; }
+    #main-nav li { margin: 0; }
+    #main-nav a {
+        display: block;
+        padding: 0.8em 1.5em;
+        text-align: center;
+        border-bottom: 1px solid var(--border-light);
+    }
+    #main-nav a::after { display: none; } /* No underline on mobile nav links */
+    .header-cta { display: none; } /* Hide header CTA on mobile, or move into menu */
+    #mobile-menu-toggle { display: block; }
+    #mobile-menu-toggle.active i::before { content: "\f00d"; } /* Change to X icon */
+
+    #hero { padding: 4em 0; min-height: auto; }
+    #hero h1 { font-size: 2rem; }
+    #hero .subtitle { font-size: 1.1rem; }
+    .hero-main-cta { font-size: 1rem; }
+
+    .content-section { padding: 3em 0; }
+    h2.section-title { font-size: 1.8rem; }
+    .solutions-grid, .saas-cards-grid, .why-us-grid { grid-template-columns: 1fr; gap: 1.5em; }
+    .solution-item, .saas-card, .why-us-item { padding: 1.5em; }
+}
