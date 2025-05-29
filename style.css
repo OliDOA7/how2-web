@@ -26,7 +26,7 @@
     --shadow-md: 0 .5rem 1rem rgba(0,0,0,.15);
 
     /* UPDATED HEADER HEIGHT */
-    --header-height: 180px; /* Accommodate 140px logo + 20px top/bottom padding */
+    --header-height: 120px; /* Accommodate 140px logo + 20px top/bottom padding */
     --border-radius: 6px;
 }
 
@@ -51,7 +51,7 @@
 }
 #company-logo {
     /* max-height: calc(var(--header-height) - 30px); OLD */
-    max-height: 140px; /* NEW: 3.5x of roughly 40px */
+    max-height: calc(var(--header-height) - 30px); /* NEW: 3.5x of roughly 40px */
     width: auto;
     display: block; /* Helps with some layout edge cases */
 }
@@ -255,11 +255,11 @@ ul li { margin-bottom: 0.5em; }
     /* Optional: Add a subtle pattern or gradient if desired */
     /* background-image: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-darker) 100%); */
     color: var(--text-light);
-    padding: 6em 0;
+    padding: 4em 0;
     text-align: center;
     display: flex;
     align-items: center;
-    min-height: 70vh;
+    min-height: 47vh;
 }
 #hero .hero-content { max-width: 800px; margin: 0 auto; }
 #hero h1 { color: var(--text-light); margin-bottom: 0.5em; }
@@ -435,11 +435,19 @@ ul li { margin-bottom: 0.5em; }
 
 @media (max-width: 768px) {
     html { font-size: 15px; }
+
+    /* Mobile Header Adjustments */
+    #main-header {
+        height: 100px;
+    }
+    #company-logo {
+        max-height: 80px; /* calc(100px - 20px) */
+    }
     #main-header .container { position: relative; }
     #main-nav {
         display: none;
         position: absolute;
-        top: var(--header-height);
+        top: 100px; /* New mobile header height */
         left: 0;
         width: 100%;
         background-color: var(--bg-white);
@@ -460,7 +468,7 @@ ul li { margin-bottom: 0.5em; }
     #mobile-menu-toggle { display: block; }
     #mobile-menu-toggle.active i::before { content: "\f00d"; } /* Change to X icon */
 
-    #hero { padding: 4em 0; min-height: auto; }
+    #hero { padding: 3em 0; min-height: auto; } /* Further reduced padding for mobile hero */
     #hero h1 { font-size: 2rem; }
     #hero .subtitle { font-size: 1.1rem; }
     .hero-main-cta { font-size: 1rem; }
